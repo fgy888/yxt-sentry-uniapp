@@ -11,6 +11,8 @@ interface GlobalHandlersIntegrations {
   onpagenotfound: boolean;
   onmemorywarning: boolean;
 }
+declare const uni: any;  // uniapp
+
 
 /** Global handlers */
 export class GlobalHandlers implements Integration {
@@ -93,17 +95,33 @@ export class GlobalHandlers implements Integration {
       return;
     }
 
-    if (!!sdk.onError) {
-      const currentHub = getCurrentHub();
+    if (typeof uni === "object") {
+      // 解决APP端无法捕获问题
+      uni.onCreateVueApp((app: any) => {
+        app.config.errorHandler = function (em: any, _vm: any, _info: any) {
+          let emVal = ''
+          if (!em.message) {
+            emVal = JSON.stringify(em)
+          } else {
+            emVal = em.stack
+          }
+          const currentHub = getCurrentHub();
+          const error = typeof emVal === 'string' ? new Error(emVal) : emVal
+          currentHub.captureException(error);
+        }
+      })
+    } else {
+      if (!!sdk.onError) {
+        const currentHub = getCurrentHub();
 
-      // https://developers.weixin.qq.com/miniprogram/dev/api/base/app/app-event/wx.onError.html
-      sdk.onError((err: string | object) => {
-        // console.info("sentry-uniapp", error);
-        const error = typeof err === 'string' ? new Error(err) : err
-        currentHub.captureException(error);
-      });
+        // https://developers.weixin.qq.com/miniprogram/dev/api/base/app/app-event/wx.onError.html
+        sdk.onError((err: string | object) => {
+          // console.info("sentry-uniapp", error);
+          const error = typeof err === 'string' ? new Error(err) : err
+          currentHub.captureException(error);
+        });
+      }
     }
-
     this._onErrorHandlerInstalled = true;
   }
 
