@@ -47,7 +47,7 @@ export class GlobalHandlers implements Integration {
       onerror: true,
       onunhandledrejection: true,
       onpagenotfound: true,
-      onmemorywarning: true,
+      onmemorywarning: false, // APP目前不支持，暂时关闭
       ...options,
     };
   }
@@ -94,7 +94,6 @@ export class GlobalHandlers implements Integration {
     if (this._onErrorHandlerInstalled) {
       return;
     }
-
     if (typeof uni === "object") {
       // 解决APP端无法捕获问题
       uni.onCreateVueApp((app: any) => {
@@ -105,6 +104,7 @@ export class GlobalHandlers implements Integration {
           } else {
             emVal = em.stack
           }
+          console.error(emVal);
           const currentHub = getCurrentHub();
           const error = typeof emVal === 'string' ? new Error(emVal) : emVal
           currentHub.captureException(error);
@@ -113,7 +113,6 @@ export class GlobalHandlers implements Integration {
     } else {
       if (!!sdk.onError) {
         const currentHub = getCurrentHub();
-
         // https://developers.weixin.qq.com/miniprogram/dev/api/base/app/app-event/wx.onError.html
         sdk.onError((err: string | object) => {
           // console.info("sentry-uniapp", error);

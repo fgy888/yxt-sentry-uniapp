@@ -73,9 +73,6 @@ Sentry SDK 的封装，可用于Uniapp全端，及微信小程序，抖音小程
    // 例如出现 LOG: API `onMemoryWarning` is not yet implemented，可通过 `onmemorywarning: false` 关闭
    Sentry.init({
      dsn: "__DSN__",
-     extraOptions: {
-       onmemorywarning: false,
-     },
      // ...
    });
 
