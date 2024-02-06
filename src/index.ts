@@ -5,10 +5,10 @@ export {
   SdkInfo,
   Event,
   EventHint,
-  EventStatus,
+  // EventStatus,
   Exception,
-  Response,
-  Severity,
+  // Response,
+  // Severity,
   StackFrame,
   Stacktrace,
   Thread,
@@ -46,9 +46,9 @@ export {
   wrap
 } from "./sdk";
 export { MiniappOptions } from "./backend";
-export { MiniappClient, ReportDialogOptions } from "./client";
+export { MiniappClient } from "./client";
 
-import * as Integrations from "./integrations/index";
-import * as Transports from "./transports/index";
+// import * as Integrations from "./integrations/index";
+// import * as Transports from "./transports/index";
 
-export { Integrations, Transports };
+// export { Integrations, Transports };

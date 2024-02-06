@@ -1,7 +1,7 @@
 {
   "name": "yxt-sentry-uniapp",
-  "version": "1.0.3",
-  "description": "用于Uniapp/小程序/快应用等平台的 Sentry SDK",
+  "version": "1.1.0",
+  "description": "用于Uniapp/小程序/APP等平台的 Sentry SDK",
   "repository": "https://github.com/fgy888/yxt-sentry-uniapp.git",
   "homepage": "https://github.com/fgy888/yxt-sentry-uniapp.git",
   "miniprogram": "dist",
@@ -14,8 +14,8 @@
     "build:dist": "npm-run-all --parallel build:min",
     "build:min": "webpack --config ./webpack.config.min.js",
     "build:watch": "webpack --watch --config ./webpack.config.min.js",
-    "build:ts": "tsc -p tsconfig.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:ts": "tsc --strict false -p tsconfig.json",
+    "build:esm": "tsc --strict false -p tsconfig.esm.json",
     "version": "node ./scripts/versionbump.js src/version.ts"
   },
   "keywords": [
@@ -44,9 +44,9 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@sentry/core": "6.19.7",
-    "@sentry/types": "6.19.7",
-    "@sentry/utils": "6.19.7",
+    "@sentry/core": "7.99.0",
+    "@sentry/types": "7.99.0",
+    "@sentry/utils": "7.99.0",
     "tslib": "^1.10.0"
   }
 }

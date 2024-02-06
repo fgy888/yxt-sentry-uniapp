@@ -1,4 +1,4 @@
-export { GlobalHandlers } from "./globalhandlers";
+export { globalHandlersIntegration } from "./globalhandlers2";
 export { TryCatch } from "./trycatch";
 export { LinkedErrors } from "./linkederrors";
 

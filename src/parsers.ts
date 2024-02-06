@@ -52,6 +52,7 @@ export function eventFromPlainObject(exception: {}, syntheticException?: Error, 
   if (syntheticException) {
     const stacktrace = computeStackTrace(syntheticException);
     const frames = prepareFramesForEvent(stacktrace.stack);
+    //@ts-ignore
     event.stacktrace = {
       frames,
     };

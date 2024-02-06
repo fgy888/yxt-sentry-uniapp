@@ -1,6 +1,13 @@
+# sentry相关组件版本说明
+```
+sentry web : 24.1.1
+sentry sdk : 7.99.0
+sentry cli : 2.27.0
+```
+
 # Sentry 小程序 SDK
 
-Sentry SDK 的封装，可用于Uniapp全端，及微信小程序，抖音小程序，百度小程序等各家平台。
+Sentry SDK 的封装，可用于Uniapp全端(包含APP)，及微信小程序，抖音小程序，百度小程序等各家平台。
 
 > 提示：由于快应用 require 方式特殊性，webpack是在编译期处理的，所以动态代码检测无效，使用时去更改webpack配置也增加了复杂行，所以单独维护，包名为 sentry-quickapp。
  
@@ -30,9 +37,6 @@ Sentry SDK 的封装，可用于Uniapp全端，及微信小程序，抖音小程
 
 ## 用法
 
-支持两种使用方式：
-
-- 直接引用
 - 通过 npm 方式使用（推荐）
 
 ### 注意
@@ -41,12 +45,6 @@ Sentry SDK 的封装，可用于Uniapp全端，及微信小程序，抖音小程
 2. 使用前需要确保有可用的 `Sentry Service`，比如：使用 [官方 Sentry Service](https://sentry.io/welcome/) 服务 或[自己搭建 Sentry Service](https://docs.sentry.io/server/)。如果想直接将异常信息上报到 <https://sentry.io/>，由于其没有备案，可以先将异常信息上报给自己已备案域名下的服务端接口，由服务端进行请求转发。
 3. 在小程序管理后台配置 `Sentry Service` 对应的 `request` 合法域名
 
-### 直接引用
-
-1. 微信小程序和微信小游戏下载 [sentry-uniapp.wx.min.js](https://github.com/uappkit/sentry-uniapp/blob/master/examples/weapp/vendor/sentry-uniapp.wx.min.js)；字节跳动小程序下载 [sentry-uniapp.tt.min.js](https://github.com/uappkit/sentry-uniapp/blob/master/examples/ttapp/vendor/sentry-uniapp.tt.min.js)；支付宝小程序下载 [sentry-uniapp.my.min.js](https://github.com/uappkit/sentry-uniapp/blob/master/examples/myapp/vendor/sentry-uniapp.my.min.js)，钉钉小程序下载 [sentry-uniapp.dd.min.js](https://github.com/uappkit/sentry-uniapp/blob/master/examples/ddapp/vendor/sentry-uniapp.dd.min.js)
-2. 参照 `/examples` 中各项目使用方式，将 `sentry-uniapp.xx.min.js` 放入项目的合适目录中，比如放入 `vendor` 文件夹
-3. 参照 `/examples/app.js` 代码，进行 `Sentry` 的初始化
-4. 对于提供了微信、字节跳动小程序 `sentry-uniapp` 会自动上报 `xx.onError()` 捕获的异常，对于支付宝小程序需要应用开发者在 `App.onError()` 中主动进行异常上报。详情可见 `/docs/cross-platform.md`。
 
 ### npm 方式
 
@@ -55,9 +53,9 @@ Sentry SDK 的封装，可用于Uniapp全端，及微信小程序，抖音小程
 1. 安装依赖
 
    ```bash
-   npm install sentry-uniapp --save
+   npm install yxt-sentry-uniapp --save
    # 或者
-   yarn add sentry-uniapp
+   yarn add yxt-sentry-uniapp
    ```
 
 2. 使用「微信开发者工具 - 工具 - 构建 npm」进行构建，详情可参考[npm 支持](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)
@@ -156,23 +154,6 @@ npm publish --registry=https://registry.npmjs.org/
 ![Error01](docs/screenshot/sentry-error-01.png)
 ![Error02](docs/screenshot/sentry-error-02.png)
 
-## 谁在使用 sentry-uniapp
-
-### 微信小程序
-
-- 丁香医生
-- 丁香医生医生端
-- 丁香人才
-- 丁香家
-
-### 支付宝小程序
-
-- 丁香医生
-
-### 字节跳动小程序
-
-- 丁香医生
-
 ## 参考资料
 
 - [sentry-javascript](https://github.com/getsentry/sentry-javascript)
@@ -195,14 +176,10 @@ npm publish --registry=https://registry.npmjs.org/
 
 ## 贡献
 
-欢迎通过 `issue`、`pull request`等方式贡献 `sentry-uniapp`。
+欢迎通过 `issue`、`pull request`等方式贡献 `yxt-sentry-uniapp`。
 
 ## 感谢
 
 最早是直接用的github fork，但发现fork的repo会有一些限制，所以重新创建的这个，本项目基于下面开源基础上修改:
 
 <https://github.com/lizhiyao/sentry-miniapp>
-
-## 联系作者
-
-微信: yinqisen

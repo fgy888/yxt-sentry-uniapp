@@ -1,32 +1,45 @@
 import {
-  getCurrentHub,
   initAndBind,
-  Integrations as CoreIntegrations,
+  functionToStringIntegration,
+  inboundFiltersIntegration,
+  getIntegrationsToSetup,
+  getCurrentHub
 } from "@sentry/core";
-import { resolvedSyncPromise } from "@sentry/utils";
+import {
+  resolvedSyncPromise,
+  // addHistoryInstrumentationHandler,
+  // logger,
+  stackParserFromStackParserOptions,
+  // supportsFetch,
+} from "@sentry/utils";
 
-import { MiniappOptions } from "./backend";
-import { MiniappClient, ReportDialogOptions } from "./client";
+// import { MiniappOptions } from "./backend";
+import { MiniappClient } from "./client";
 import { wrap as internalWrap } from "./helpers";
 import {
-  GlobalHandlers,
-  IgnoreMpcrawlerErrors,
+  globalHandlersIntegration,
   LinkedErrors,
   Router,
   System,
   TryCatch,
 } from "./integrations/index";
+import { defaultStackParser } from './stack-parsers';
+
+import { makeXHRTransport } from './transports/xhr2'
+
 
 export const defaultIntegrations = [
-  new CoreIntegrations.InboundFilters(),
-  new CoreIntegrations.FunctionToString(),
+  inboundFiltersIntegration(),
+  functionToStringIntegration(),
+
+  globalHandlersIntegration(),
   new TryCatch(),
-  new GlobalHandlers(),
+  // new GlobalHandlers(),
   new LinkedErrors(),
 
   new System(),
   new Router(),
-  new IgnoreMpcrawlerErrors(),
+
 ];
 
 /**
@@ -81,9 +94,9 @@ export const defaultIntegrations = [
  * });
  * ```
  *
- * @see {@link MiniappOptions} for documentation on configuration options.
+ * for documentation on configuration options.
  */
-export function init(options: MiniappOptions = {}): void {
+export function init(options: any): void {
   // 如果将 options.defaultIntegrations 设置为 false，则不会添加默认集成，否则将在内部将其设置为建议的默认集成。
   // tslint:disable-next-line: strict-comparisons
   if (options.defaultIntegrations === undefined) {
@@ -91,13 +104,20 @@ export function init(options: MiniappOptions = {}): void {
   }
 
   // https://github.com/uappkit/sentry-uniapp/issues/23
-  options.normalizeDepth = options.normalizeDepth || 5;
+  // options.normalizeDepth = options.normalizeDepth || 5;
 
-  if (options.defaultIntegrations) {
-    (options.defaultIntegrations[3] as GlobalHandlers).setExtraOptions(options.extraOptions);
-  }
+  // if (options.defaultIntegrations) {
+  //   (options.defaultIntegrations[3] as GlobalHandlers).setExtraOptions(options.extraOptions);
+  // }
 
-  initAndBind(MiniappClient, options);
+  const clientOptions: any = {
+    ...options,
+    stackParser: stackParserFromStackParserOptions(options.stackParser || defaultStackParser),
+    integrations: getIntegrationsToSetup(options),
+    transport: options.transport || makeXHRTransport,
+  };
+
+  initAndBind(MiniappClient, clientOptions);
 }
 
 /**
@@ -106,12 +126,13 @@ export function init(options: MiniappOptions = {}): void {
  *
  * @param options Everything is optional, we try to fetch all info need from the global scope.
  */
-export function showReportDialog(options: ReportDialogOptions = {}): void {
+export function showReportDialog(options: any = {}): void {
   if (!options.eventId) {
     options.eventId = getCurrentHub().lastEventId();
   }
   const client = getCurrentHub().getClient<MiniappClient>();
   if (client) {
+    // @ts-ignore
     client.showReportDialog(options);
   }
 }
