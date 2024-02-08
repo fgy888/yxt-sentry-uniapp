@@ -35,6 +35,18 @@ export {
   withScope
 } from "@sentry/core";
 
+export {
+  captureConsoleIntegration,
+  debugIntegration,
+  dedupeIntegration,
+  extraErrorDataIntegration,
+  reportingObserverIntegration,
+  rewriteFramesIntegration,
+  sessionTimingIntegration,
+  httpClientIntegration,
+  contextLinesIntegration
+} from '@sentry/integrations';
+
 export { SDK_NAME, SDK_VERSION } from "./version";
 export {
   defaultIntegrations,
