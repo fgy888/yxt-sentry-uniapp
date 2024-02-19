@@ -20,7 +20,7 @@ import { sdk } from "../crossPlatform";
  */
 export function makeXHRTransport(options: any): Transport {
   function makeRequest(request: TransportRequest): PromiseLike<TransportMakeRequestResponse> {
-    return new SyncPromise((resolve, reject) => {
+    return new SyncPromise((resolve: any, reject: any) => {
       const http = sdk.request || sdk.httpRequest;
       http({
         url: options.url,
